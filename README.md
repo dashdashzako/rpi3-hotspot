@@ -1,13 +1,13 @@
 # rpi3-hotspot
 
-Turns a Raspberry Pi 3 into a configurable hotspot.
+Turns a Raspberry Pi 3 into a configurable access point.
 
 ## How this works
 
-A hotspot is created if `/boot/hotspot.txt` file is present. If there is no such file, no hotspot will be set up and the `/etc/wpa_supplicant/wpa_supplicant.conf` will be used.
+An access point is created if `/boot/hotspot.txt` file is present. If there is no such file, no access point will be set up and the `/etc/wpa_supplicant/wpa_supplicant.conf` will be used.
 
-Defaults are `ssid=PoppyHotspot` and `passphrase=poppyproject` but can be changed by tweaking the `/boot/hotspot.txt` file. One or both parameters can be modified.  
-The Raspberry Pi IP address will be `192.168.0.1`.
+Defaults are `ssid=RpiAccessPoint` and `passphrase=rpiaccesspointpass` but can be changed by tweaking the `/boot/hotspot.txt` file. One or both parameters can be modified.  
+The Raspberry Pi IP address will be `10.10.10.1`.
 
 ```
 # /boot/hotspot.txt

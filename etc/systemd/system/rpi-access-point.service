@@ -1,11 +1,11 @@
 [Unit]
-Description=Generates a hotspot
+Description=Generates an access point
 After=network-online.target
 
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-ExecStart=/usr/bin/rpi-hotspot
+ExecStart=/usr/bin/rpi-access-point
 
 [Install]
 WantedBy=multi-user.target
