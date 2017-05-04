@@ -1,6 +1,8 @@
 #!/bin/bash
 #
 
+set -e
+
 if [ -f /boot/hotspot.txt ]; then
   hotspot_ssid=$(sed -n -e 's/^ssid=\([[:alnum:]]\+\)/\1/p' /boot/hotspot.txt)
   hotspot_ssid="${hotspot_ssid:-RpiAccessPoint}"
@@ -16,12 +18,11 @@ if [ -f /boot/hotspot.txt ]; then
   iptables -A FORWARD -i eth0 -o wlan0 -m state --state RELATED,ESTABLISHED -j ACCEPT
   iptables -A FORWARD -i wlan0 -o eth0 -j ACCEPT
 
-  systemctl restart networking
-
   ifdown wlan0
   ifconfig wlan0 10.10.10.1
   ifup wlan0
 
+  systemctl restart networking
   systemctl start dnsmasq
   systemctl start hostapd
 fi
