@@ -19,7 +19,7 @@ if [ -f /boot/hotspot.txt ]; then
   iptables -A FORWARD -i wlan0 -o eth0 -j ACCEPT
 
   ifdown wlan0
-  ifconfig wlan0 10.10.10.1
+  ifconfig wlan0 10.99.99.1
   ifup wlan0
 
   systemctl restart networking
@@ -37,4 +37,6 @@ else
   systemctl stop dnsmasq
   systemctl stop hostapd
   systemctl restart networking
+
+  wpa_supplicant -B -i wlan0 -c /etc/wpa_supplicant/wpa_supplicant.conf > /dev/null 2>&1
 fi
