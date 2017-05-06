@@ -26,7 +26,10 @@ if [ -f /boot/hotspot.txt ]; then
     kill "$wpa_pid"
   fi
 
-  sysctl -q -w net.ipv4.ip_forward=1
+  if [ "$(sysctl -n net.ipv4.ip_forward 2>/dev/null)" == "0" ]; then
+    sysctl -q -w net.ipv4.ip_forward=1
+    sysctl -p
+  fi
 
   if ! iptables -t nat -C POSTROUTING -o eth0 -j MASQUERADE > /dev/null 2>&1; then
     iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
