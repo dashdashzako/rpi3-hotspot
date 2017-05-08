@@ -43,7 +43,7 @@ if [ -f /boot/hotspot.txt ]; then
     iptables -A FORWARD -i wlan0 -o eth0 -j ACCEPT
   fi
 
-  ifdown wlan0 > /dev/null 2>&1
+  ifdown wlan0 &>/dev/null
   ifconfig wlan0 10.99.99.1
   ifup wlan0
 
@@ -73,12 +73,15 @@ else
     iptables -D FORWARD -i wlan0 -o eth0 -j ACCEPT
   fi
 
-  sysctl -q -w net.ipv4.ip_forward=0
+  if [ "$(sysctl -n net.ipv4.ip_forward 2>/dev/null)" == "1" ]; then
+    sysctl -q -w net.ipv4.ip_forward=0
+    sysctl -p
+  fi
 
   systemctl stop dnsmasq
   systemctl stop hostapd
 
-  ifdown wlan0 > /dev/null 2>&1
+  ifdown wlan0 &>/dev/null
   ifconfig wlan0 0.0.0.0
   ifup wlan0
 
