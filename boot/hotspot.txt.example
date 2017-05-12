@@ -1,0 +1,16 @@
+# This file is an example of what /boot/hotspot.txt can be.
+#
+# If an option is not provided in the file, its default value will
+# be used.
+
+# `ssid` is the network name that will be detected.
+# Its length should be between 1 and 32 characters.
+#
+# Default value is ssid=RpiAccessPoint
+ssid=ExampleAccessPoint
+
+# `passphrase` is the password required to connect to the network.
+# Its length should be between 8 and 63 characters (WPA-PSK).
+#
+# Default value is passphrase=rpi_ap_pass
+passphrase=example_secret_passphrase

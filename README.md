@@ -7,6 +7,8 @@ Turns a Raspberry Pi 3 into a configurable access point.
 An access point is created if `/boot/hotspot.txt` file is present. If there is no such file, no access point will be set up and the `/etc/wpa_supplicant/wpa_supplicant.conf` will be used.
 
 Defaults are `ssid=RpiAccessPoint` and `passphrase=rpi_ap_pass` but can be changed by tweaking the `/boot/hotspot.txt` file. One or both parameters can be modified.  
+See `boot/hotspot.txt.example` file for a documented example.
+
 The Raspberry Pi IP address will be `10.99.99.1`.
 
 ```
@@ -14,7 +16,6 @@ The Raspberry Pi IP address will be `10.99.99.1`.
 ssid=RodrigoTheRobot
 passphrase=your_secret_passphrase
 ```
-
 
 ## Installation
 
@@ -26,6 +27,7 @@ passphrase=your_secret_passphrase
 
 ```bash
 sudo systemctl disable rpi-hotspot
+sudo rm /etc/systemd/system/rpi-hotspot.service
 sudo rm /usr/bin/rpi-hotspot
 sudo systemctl daemon-reload
 ```
