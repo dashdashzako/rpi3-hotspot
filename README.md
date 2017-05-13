@@ -26,6 +26,7 @@ passphrase=your_secret_passphrase
 ## Uninstalling previous version
 
 ```bash
+sudo systemctl stop rpi-hotspot
 sudo systemctl disable rpi-hotspot
 sudo rm /etc/systemd/system/rpi-hotspot.service
 sudo rm /usr/bin/rpi-hotspot
