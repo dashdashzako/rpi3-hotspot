@@ -80,7 +80,7 @@ else
     iptables -D FORWARD -i wlan0 -o eth0 -j ACCEPT
   fi
 
-  if [ "$(sysctl -n net.ipv4.ip_forward 2>/dev/null)" == "1" ]; then
+  if [ "$(sysctl -n net.ipv4.ip_forward 2>/dev/null)" -eq "1" ]; then
     sysctl -q -w net.ipv4.ip_forward=0
     sysctl -p
   fi
