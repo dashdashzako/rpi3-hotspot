@@ -8,6 +8,7 @@ log() {
 }
 
 if [ -f /boot/hotspot.txt ]; then
+
   log "Activating access point"
 
   hotspot_ssid=$(sed -n -e 's/^ssid=\(.\+\)$/\1/p' /boot/hotspot.txt)
@@ -26,6 +27,12 @@ if [ -f /boot/hotspot.txt ]; then
   sed -i "s/^wpa_passphrase=.*/wpa_passphrase=$hotspot_passphrase/g" /etc/hostapd/hostapd.conf
 
   log "ssid: $hotspot_ssid will be used"
+
+  if ! grep "^denyinterfaces wlan0$" /etc/dhcpcd.conf; then
+    log "dhcpcd will ignore wlan0"
+    echo "denyinterfaces wlan0" | tee -a /etc/dhcpcd.conf
+    systemctl restart dhcpcd
+  fi
 
   wpa_pid=$(ps aux | grep wpa_supplicant | grep -v grep | awk '{print $2}')
   if [ -n "$wpa_pid" ]; then
@@ -67,6 +74,11 @@ if [ -f /boot/hotspot.txt ]; then
   log "Access point UP"
 else
   log "Deactivating access point"
+
+  if grep "^denyinterfaces wlan0$" /etc/dhcpcd.conf; then
+    sed -i "/denyinterfaces wlan0/d" /etc/dhcpcd.conf
+    systemctl restart dhcpcd
+  fi
 
   if iptables -t nat -C POSTROUTING -o eth0 -j MASQUERADE > /dev/null 2>&1; then
     iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
