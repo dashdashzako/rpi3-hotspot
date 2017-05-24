@@ -13,13 +13,13 @@ if [ -f /boot/hotspot.txt ]; then
 
   hotspot_ssid=$(sed -n -e 's/^ssid=\(.\+\)$/\1/p' /boot/hotspot.txt)
   hotspot_ssid="${hotspot_ssid:-RpiAccessPoint}"
-  if [ ${#hotspot_ssid} -lt 1 -o ${#hotspot_ssid} -gt 32 ]; then
+  if [ ${#hotspot_ssid} -lt 1 ] || [ ${#hotspot_ssid} -gt 32 ]; then
     hotspot_ssid="RpiAccessPoint"
   fi
 
   hotspot_passphrase=$(sed -n -e 's/^passphrase=\(.\+\)$/\1/p' /boot/hotspot.txt)
   hotspot_passphrase="${hotspot_passphrase:-rpi_ap_pass}"
-  if [ ${#hotspot_passphrase} -lt 8 -o ${#hotspot_passphrase} -gt 63 ]; then
+  if [ ${#hotspot_passphrase} -lt 8 ] || [ ${#hotspot_passphrase} -gt 63 ]; then
     hotspot_passphrase="rpi_ap_pass"
   fi
 

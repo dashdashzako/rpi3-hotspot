@@ -28,7 +28,6 @@ passphrase=your_secret_passphrase
 ```bash
 sudo systemctl stop rpi-hotspot
 sudo systemctl disable rpi-hotspot
-sudo rm /etc/systemd/system/rpi-hotspot.service
-sudo rm /usr/bin/rpi-hotspot
+sudo rm /etc/systemd/system/rpi-hotspot.service /usr/bin/rpi-hotspot
 sudo systemctl daemon-reload
 ```
