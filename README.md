@@ -20,8 +20,10 @@ passphrase=your_secret_passphrase
 ## Installation
 
 1. Clone this repo or download the archive.
-2. `sudo ./install.sh`
-3. Profit.
+2. `cd` into the directory
+3. Uninstall previously installed version
+4. `sudo ./install.sh`
+5. Profit.
 
 ## Uninstalling previous version
 
