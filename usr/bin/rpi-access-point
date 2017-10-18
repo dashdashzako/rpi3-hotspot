@@ -36,7 +36,7 @@ if [ -f $config_path ]; then
     systemctl restart dhcpcd
   fi
 
-  wpa_pid=$(ps aux | grep wpa_supplicant | grep -v grep | awk '{print $2}')
+  wpa_pid=$(pgrep wpa_supplicant)
   if [ -n "$wpa_pid" ]; then
     log "Stopping wpa_supplicant"
     kill "$wpa_pid"
@@ -108,7 +108,7 @@ else
 
   systemctl restart networking
 
-  wpa_pid=$(ps aux | grep wpa_supplicant | grep -v grep | awk '{print $2}')
+  wpa_pid=$(pgrep wpa_supplicant)
   if [ -n "$wpa_pid" ]; then
     log "Stopping wpa_supplicant"
     kill "$wpa_pid"
