@@ -14,21 +14,36 @@ if [ -f $config_path ]; then
   log "Config file found at $config_path, activating access point"
 
   hotspot_ssid=$(sed -n -e 's/^ssid=\(.\+\)$/\1/p' /boot/hotspot.txt)
-  hotspot_ssid="${hotspot_ssid:-RpiAccessPoint}"
+
+  # 802.11i specs:
+  # The length of the SSID information field is between 0 and 32 octets.
+  # A 0 length information field is used within Probe Request management frames
+  # to indicate the wildcard SSID.
   if [ ${#hotspot_ssid} -lt 1 ] || [ ${#hotspot_ssid} -gt 32 ]; then
-    hotspot_ssid="RpiAccessPoint"
+    log "Using default access point SSID"
+    hotspot_ssid="Rpi Access Point"
   fi
 
+  # append the hostname to avoid ssid collision
+  hotspot_ssid="$hotspot_ssid ($(hostname))"
+
+  log "SSID will be '$hotspot_ssid'"
+
   hotspot_passphrase=$(sed -n -e 's/^passphrase=\(.\+\)$/\1/p' /boot/hotspot.txt)
-  hotspot_passphrase="${hotspot_passphrase:-rpi_ap_pass}"
+
+  # 802.11i specs:
+  # A pass-phrase is a sequence of between 8 and 63 ASCII-encoded characters.
+  # The limit of 63 comes from the desire to distinguish between a pass-phrase
+  # and a PSK displayed as 64 hexadecimal characters.
   if [ ${#hotspot_passphrase} -lt 8 ] || [ ${#hotspot_passphrase} -gt 63 ]; then
+    log "Using default passphrase"
     hotspot_passphrase="rpi_ap_pass"
   fi
 
+  log "Updating hostapd configuration"
+
   sed -i "s/^ssid=.*/ssid=$hotspot_ssid/g" /etc/hostapd/hostapd.conf
   sed -i "s/^wpa_passphrase=.*/wpa_passphrase=$hotspot_passphrase/g" /etc/hostapd/hostapd.conf
-
-  log "ssid: $hotspot_ssid will be used"
 
   if ! grep "^denyinterfaces wlan0$" /etc/dhcpcd.conf; then
     log "dhcpcd will ignore wlan0"
