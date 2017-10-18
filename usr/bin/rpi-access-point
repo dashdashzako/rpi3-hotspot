@@ -7,9 +7,11 @@ log() {
   echo "$1"
 }
 
-if [ -f /boot/hotspot.txt ]; then
+config_path="/boot/hotspot.txt"
 
-  log "Activating access point"
+if [ -f $config_path ]; then
+
+  log "Config file found at $config_path, activating access point"
 
   hotspot_ssid=$(sed -n -e 's/^ssid=\(.\+\)$/\1/p' /boot/hotspot.txt)
   hotspot_ssid="${hotspot_ssid:-RpiAccessPoint}"
