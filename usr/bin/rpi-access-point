@@ -4,7 +4,7 @@
 set -e
 
 log() {
-  echo "[$(date +"%T")] $1"
+  echo "$1"
 }
 
 if [ -f /boot/hotspot.txt ]; then
