@@ -24,8 +24,12 @@ if [ -f $config_path ]; then
     hotspot_ssid="Rpi Access Point"
   fi
 
-  # append the hostname to avoid ssid collision
-  hotspot_ssid="$hotspot_ssid ($(hostname))"
+  hide_hostname=$(sed -n -e 's/^hide_hostname=\(.\+\)$/\1/p' /boot/hotspot.txt)
+
+  if [ "$hide_hostname" != "1" ]; then
+    # append the hostname to avoid ssid collision
+    hotspot_ssid="$hotspot_ssid ($(hostname))"
+  fi
 
   log "SSID will be '$hotspot_ssid'"
 
@@ -57,7 +61,7 @@ if [ -f $config_path ]; then
     kill "$wpa_pid"
   fi
 
-  if [ "$(sysctl -n net.ipv4.ip_forward 2>/dev/null)" -eq "0" ]; then
+  if [ "$(sysctl -n net.ipv4.ip_forward 2>/dev/null)" = "0" ]; then
     sysctl -q -w net.ipv4.ip_forward=1
     sysctl -p
   fi
@@ -109,7 +113,7 @@ else
     iptables -D FORWARD -i wlan0 -o eth0 -j ACCEPT
   fi
 
-  if [ "$(sysctl -n net.ipv4.ip_forward 2>/dev/null)" -eq "1" ]; then
+  if [ "$(sysctl -n net.ipv4.ip_forward 2>/dev/null)" = "1" ]; then
     sysctl -q -w net.ipv4.ip_forward=0
     sysctl -p
   fi

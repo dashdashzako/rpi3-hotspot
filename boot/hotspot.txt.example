@@ -14,3 +14,11 @@ ssid=ExampleAccessPoint
 #
 # Default value is passphrase=rpi_ap_pass
 passphrase=example_secret_passphrase
+
+# hostname will be appendded to the SSID by default. The `hide_hostname` option
+# is used to prevent this behavior. This is convenient to differenciate hosts
+# configured with the same SSID.
+#
+# Default value is not specified, hostname will be appendded.
+# To disable this behavior, `hide_hostname=1`. Any other value will be ignored.
+hide_hostname=1

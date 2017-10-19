@@ -1,5 +1,5 @@
 [Unit]
-Description=Generates an access point
+Description=Generates a wireless access point
 After=network-online.target
 
 [Service]
