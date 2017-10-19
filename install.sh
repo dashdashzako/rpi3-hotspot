@@ -4,7 +4,7 @@
 set -e
 
 apt-get update
-apt-get install --yes hostapd dnsmasq
+apt-get install --yes network-manager hostapd dnsmasq
 systemctl disable hostapd
 systemctl disable dnsmasq
 
