@@ -6,7 +6,7 @@
 # `ssid` is the network name that will be detected.
 # Its length should be between 1 and 32 characters.
 #
-# Default value is ssid=RpiAccessPoint
+# Default value is ssid=Rpi Access Point
 ssid=ExampleAccessPoint
 
 # `passphrase` is the password required to connect to the network.
