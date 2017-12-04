@@ -30,6 +30,6 @@ passphrase=your_secret_passphrase
 ```bash
 sudo systemctl stop rpi-access-point
 sudo systemctl disable rpi-access-point
-sudo rm /etc/systemd/system/rpi-access-point.service rpi-access-point
+sudo rm /etc/systemd/system/rpi-access-point.service /usr/bin/rpi-access-point
 sudo systemctl daemon-reload
 ```
